@@ -1,0 +1,11 @@
+{
+  "ID": "nginx-1",
+  "Name": "nginx",
+  "Address": "104.197.154.179",
+  "Port": 80,
+  "check": {
+    "http": "http://104.197.154.179",
+    "interval": "10s",
+    "timeout": "1s"
+  }
+}

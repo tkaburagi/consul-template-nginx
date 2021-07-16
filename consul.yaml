@@ -1,0 +1,17 @@
+global:
+  name: consul
+  datacenter: dc-1
+server:
+  replicas: 1
+  bootstrapExpect: 1
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0
+client:
+  enabled: true
+  grpc: true
+ui:
+  enabled: true
+  service:
+    type: LoadBalancer
+  grpc: true

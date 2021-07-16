@@ -48,6 +48,7 @@ resource "google_compute_firewall" "http-ssh" {
 data "template_file" "init_gcp" {
   template = file("setup.sh")
   vars = {
-    ct_url = var.ct_url
+    ct_url     = var.ct_url
+    consul_url = var.consul_url
   }
 }

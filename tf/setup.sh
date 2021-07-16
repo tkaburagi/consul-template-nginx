@@ -22,3 +22,42 @@ curl "${ct_url}" --output ~/ct.zip
 sudo unzip ~/ct.zip -d /usr/local/bin/
 sudo chmod +x /usr/local/bin/consul-template
 rm ~/ct.zip
+
+
+sudo tee /etc/nginx/nginx.conf.ctvmpl <<EOF
+http {
+	upstream backend {
+	{{ range service "nginx" }}
+	  server {{ .Address }}:{{ .Port }};
+	{{ end }}
+	}
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+	   location / {
+	      proxy_pass http://backend;
+	   }
+	}
+}
+events{
+}
+EOF
+
+tee ~/consul-template-config.hcl <<EOF
+consul {
+  address = "${consul_url}"
+  retry {
+  enabled = true
+  attempts = 12
+  backoff = "250ms"
+  }}
+
+template {
+  source      = "/etc/nginx/nginx.conf.ctvmpl"
+  destination = "/etc/nginx/nginx.conf"
+  perms = 0600
+  command = "sudo nginx -s reload"
+}
+EOF
