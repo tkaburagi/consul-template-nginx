@@ -82,4 +82,8 @@ Hello Consul From First Container
 Hello Consul From Second Container
 ```
 
+```
+Hello Consul From Third Container
+```
+
 See GCE Log
