@@ -1,3 +1,6 @@
+![](demo-img.png)
+
+
 ```shell script
 gcloud container clusters create lab-cluster \
  --num-nodes=3 \
@@ -29,8 +32,8 @@ kubectl get svc
 ```
 
 Replace IPs
-* `nginx/first-container/first.yaml`
-* `nginx/second-container/second.yaml`
+* `apps/first-container/first.yaml`
+* `apps/second-container/second.yaml`
 
 SSH to GCE
 ```
@@ -38,9 +41,9 @@ sudo consul-template -config=consul-template-config.hcl -log-level=debug
 ```
 
 ```shell script
-curl -X PUT --data-binary @/Users/kabu/hashicorp/consul/consul-template-demo/nginx/first-container/regist.json http://34.132.129.62/v1/agent/service/register
+curl -X PUT --data-binary @/Users/kabu/hashicorp/consul/consul-template-demo/apps/first-container/regist.json http://34.132.129.62/v1/agent/service/register
 
-curl -X PUT --data-binary @/Users/kabu/hashicorp/consul/consul-template-demo/nginx/second-container/regist.json http://34.132.129.62/v1/agent/service/register
+curl -X PUT --data-binary @/Users/kabu/hashicorp/consul/consul-template-demo/apps/second-container/regist.json http://34.132.129.62/v1/agent/service/register
 ```
 
 Browse Nginx: `http://35.200.15.197`
@@ -60,14 +63,14 @@ See GCE Log
 ## Scale out
 
 ```shell script
-kubectl apply -f nginx/third-container/third.yaml
+kubectl apply -f apps/third-container/third.yaml
 ```
 
 Replace IP
-* `nginx/third-container/third.yaml`
+* `apps/third-container/third.yaml`
 
 ```shell script
-curl -X PUT --data-binary @/Users/kabu/hashicorp/consul/consul-template-demo/nginx/third-container/regist.json http://34.132.129.62/v1/agent/service/register
+curl -X PUT --data-binary @/Users/kabu/hashicorp/consul/consul-template-demo/apps/third-container/regist.json http://34.132.129.62/v1/agent/service/register
 ```
 
 Browse Nginx: `http://35.200.15.197`
